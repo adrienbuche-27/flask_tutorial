@@ -68,14 +68,14 @@ def login():
 @bp.before_app_request
 def load_logged_in_user():
 	"""Once the user is logged in, load the relevant information."""
-    user_id = session.get('user_id')
+	user_id = session.get('user_id')
 
-    if user_id is None:
-        g.user = None
-    else:
-        g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchone()
+	if user_id is None:
+		g.user = None
+	else:
+		g.user = get_db().execute(
+			'SELECT * FROM user WHERE id = ?', (user_id,)
+			).fetchone()
 
 
 @bp.route('/logout')
@@ -85,7 +85,7 @@ def logout():
 
 
 def login_required(view):
-	"""Creating, editing, and deleting blog posts will require a user to be logged in."""
+    """Creating, editing, and deleting blog posts will require a user to be logged in."""
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
